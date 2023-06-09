@@ -1,6 +1,7 @@
 import datetime
 import json
 import re
+import captcha
 
 import requests
 
@@ -293,10 +294,15 @@ def get_termins(buro, termin_type):
     except AttributeError:
         token = None
 
+    captcha_response = s.get('https://terminvereinbarung.muenchen.de/bba/securimage/securimage_show.php')
+    open('/tmp/captcha.png', 'wb').write(captcha_response.content)
+    code = captcha.show_captcha('/tmp/captcha.png')
+
     termin_data = {
         f'CASETYPES[{termin_type}]': 1,
         'step': 'WEB_APPOINT_SEARCH_BY_CASETYPES',
         'FRM_CASETYPES_token': token,
+        'captcha_code': code,
     }
 
     response = s.post(buro.get_frame_url(), termin_data)
