@@ -1,15 +1,17 @@
 """Utility that renders a dialog with the captcha."""
 
 import tkinter as tk
-from PIL import Image, ImageTk
 
-def show_captcha(image_path):
+from PIL import Image, ImageTk
+from typing import Optional
+
+def show_captcha(image_path: str) -> Optional[str]:
+    """Shows a dialog with the captcha and a text field. Returns the text the user entered or None."""
     root = tk.Tk()
     root.title("Captcha")
 
-    # Load the image
     image = Image.open(image_path)
-    #image = image.resize((300, 300))  # Adjust the size as per your preference
+    image = image.resize((image.width * 2, image.height * 2))
 
     # Convert the image to Tkinter-compatible format
     tk_image = ImageTk.PhotoImage(image)
@@ -23,7 +25,7 @@ def show_captcha(image_path):
     text_entry.pack()
     text_entry.focus()
 
-    # Create a button to process the entered text
+    # Process keypress events and return the entered text.
     result = []
     def process():
         result.append(text_entry.get())
@@ -38,4 +40,4 @@ def show_captcha(image_path):
 
 if __name__ == '__main__':
     import sys
-    print('Text:', repr(show_captcha(sys.argv[1])))
+    print('Text:', show_captcha(sys.argv[1]))

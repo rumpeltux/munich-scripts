@@ -337,8 +337,19 @@ def get_termins(buro, termin_type):
 
 
 if __name__ == '__main__':
+    departments = {c.get_name(): c for c in Buro.__subclasses__()}
+
+    import argparse
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("department", choices=departments.keys())
+    parser.add_argument("appointment_type", help="The appointment type, e.g. 'FS Umschreibung Ausländischer FS'")
+
+    args = parser.parse_args()
+    appointments = get_termins(departments[args.department], args.appointment_type)
+
     # Example for exchanging driver license
-    appointments = get_termins(DMV, 'FS Umschreibung Ausländischer FS')
+    #appointments = get_termins(DMV, 'FS Umschreibung Ausländischer FS')
 
     # # Example for Anmeldung
     # appointments = get_termins(CityHall, 'An- oder Ummeldung - Einzelperson')

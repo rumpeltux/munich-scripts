@@ -51,14 +51,16 @@ Shortly after deploy make sure everything is running
 
 ## Script usage
 
-Edit script content and select what type of appointments you actually need:
+Run the script
 
+    python3 termin_api.py Bürgerbüro 'An- oder Ummeldung - Einzelperson'
+
+Output will be printed in the console.
+
+Alternatively import the and select what type of appointments you actually need:
+
+    from termin_api import get_termins, DMV
     appointments = get_termins(DMV, 'FS Umschreibung Ausländischer FS')
     # appointments = get_termins(CityHall, 'An- oder Ummeldung - Einzelperson')
     # appointments = get_termins(ForeignLabor, 'Niederlassungserlaubnis Blaue Karte EU')
 
-Run the script
-
-    python3 termin_api.py
-
-Output will be printed in the console
